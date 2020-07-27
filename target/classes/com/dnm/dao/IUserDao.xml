@@ -7,4 +7,35 @@
     <select id="findAll" resultType="com.dnm.domain.User">
         select * from user;
     </select>
+<!--    插入数据-->
+    <insert id="saveUser" parameterType="com.dnm.domain.User">
+        <!-- 配置插入操作后返回插入数据的id-->
+        <selectKey keyProperty="id" keyColumn="id" resultType="int" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+        insert into user(username, address, sex, birthday) values(#{username}, #{address}, #{sex}, #{birthday});
+    </insert>
+
+    <update id="updateUser" parameterType="com.dnm.domain.User">
+        update user set username=#{username}, address=#{address}, sex=#{sex}, birthday=#{birthday} where id=#{id};
+    </update>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        delete user from user where id=#{userid};
+    </delete>
+
+<!--    根据Id查对象-->
+    <select id="findById" resultType="com.dnm.domain.User" parameterType="INT">
+        select * from user where id=#{userid};
+    </select>
+
+<!--    模糊查询-->
+    <select id="findByName" resultType="com.dnm.domain.User" parameterType="String">
+        select * from user where username like #{username};
+    </select>
+
+<!--    聚合函数-->
+    <select id="findTotalCount" resultType="Integer">
+        select count(id) from user;
+    </select>
 </mapper>

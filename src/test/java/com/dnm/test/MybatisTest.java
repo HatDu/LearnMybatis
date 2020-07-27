@@ -2,26 +2,49 @@ package com.dnm.test;
 
 import com.dnm.dao.IUserDao;
 import com.dnm.domain.User;
+import com.sun.org.apache.xml.internal.security.Init;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import sun.misc.Resource;
 
 //import javax.annotation.Resources;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Mybatis入门案例
  */
 public class MybatisTest {
-    /**
-     * 入门案例
-     * @param args
-     */
-    public static void main(String[] args) throws IOException {
+    private SqlSession session;
+    IUserDao userDao;
+    @Before
+    public void init(){
+        try {
+            InputStream in = Resources.getResourceAsStream("SqlMapConfig.xml");
+            SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
+            SqlSessionFactory factory = builder.build(in);
+            session = factory.openSession();
+            userDao = session.getMapper(IUserDao.class);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @After
+    public void destroy() {
+        session.close();
+    }
+    public void main(String[] args) throws IOException {
         // 1. 读取配置文件
         InputStream in = Resources.getResourceAsStream("SqlMapConfig.xml");
         // 2. 创建SqlSessionFactory工厂
@@ -37,5 +60,82 @@ public class MybatisTest {
         // 6. 释放资源
         session.close();
         in.close();
+    }
+
+    /**
+     * 查询所有
+     */
+    @Test
+    public void findAll(){
+        List<User> users = userDao.findAll();
+        for(User user : users){
+            System.out.println(user);
+        }
+    }
+    /**
+     * 测试保存
+     */
+    @Test
+    public void testSave(){
+        User user = new User();
+        user.setUsername("瑞克");
+        user.setAddress("四川绵阳");
+        user.setSex("男");
+        user.setBirthday(new Date());
+        System.out.println("保存操作前的user：" + user);
+        // 执行保存方法
+        userDao.saveUser(user);
+        session.commit();
+        System.out.println("保存操作后的user：" + user);
+    }
+
+    /**
+     * 测试更新
+     */
+    @Test
+    public void testUpdate(){
+        User user = new User();
+        user.setId(3);
+        user.setUsername("普利莫");
+        user.setAddress("河北唐山");
+        user.setSex("男");
+        user.setBirthday(new Date());
+
+        // 执行保存方法
+        userDao.updateUser(user);
+        session.commit();
+    }
+    @Test
+    public void testDelete(){
+        userDao.deleteUser(4);
+        session.commit();
+        findAll();
+    }
+
+    /**
+     * 查询一个用户
+     */
+    @Test
+    public void findOne(){
+        User user = userDao.findById(5);
+        System.out.println(user);
+    }
+
+    /**
+     * 根据名称进行查询，包括模糊查询
+     */
+    @Test
+    public void testFindByName(){
+        User user = userDao.findByName("佩%");
+        System.out.println(user);
+    }
+
+    /**
+     * 查询记录条数
+     */
+    @Test
+    public void findTotalCount(){
+        Integer count = userDao.findTotalCount();
+        System.out.println("共有" + count + "条数据。");
     }
 }
