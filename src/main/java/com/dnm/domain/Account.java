@@ -1,9 +1,18 @@
 package com.dnm.domain;
 
 public class Account {
-    Integer id;
-    Integer uid;
-    Double money;
+    protected Integer id;
+    protected Integer uid;
+    protected Double money;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Integer getId() {
         return id;
@@ -35,6 +44,6 @@ public class Account {
                 "id=" + id +
                 ", uid=" + uid +
                 ", money=" + money +
-                '}';
+                '}' ;
     }
 }

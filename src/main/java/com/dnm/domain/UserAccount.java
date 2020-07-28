@@ -25,7 +25,7 @@ public class UserAccount extends Account{
         return "UserAccount{" +
                 "username='" + username + '\'' +
                 ", address='" + address + '\'' +
-                ", id=" + id +
+                ", id=" + super.id +
                 ", uid=" + uid +
                 ", money=" + money +
                 '}';

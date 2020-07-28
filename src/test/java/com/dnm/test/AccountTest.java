@@ -98,7 +98,7 @@ public class AccountTest {
     }
 
     /**
-     * 查询所有账户，包括用户名和地址
+     * 查询所有账户，包括用户名和地址,以继承的方式
      */
     @Test
     public void findAllUserAccount(){
@@ -106,6 +106,18 @@ public class AccountTest {
 
         for(UserAccount u : userAccounts){
             System.out.println(u);
+        }
+    }
+
+    /**
+     * 多表查询，一对一，查询账户以及账户所对应的用户信息
+     */
+    @Test
+    public void findAllAccountUser(){
+        List<Account> accounts = accountDao.findAllAccountUser();
+        for(Account account : accounts){
+            System.out.print(account);
+            System.out.println(account.getUser());
         }
     }
 }

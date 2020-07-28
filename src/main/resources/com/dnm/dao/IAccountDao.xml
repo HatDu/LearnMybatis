@@ -3,6 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dnm.dao.IAccountDao">
+
+    <!--通过组合的方式实现多表查询，一对一 -->
+    <resultMap id="accountUserMap" type="com.dnm.domain.Account">
+        <id property="id" column="aid"></id>
+        <result property="uid" column="uid"></result>
+        <result property="money" column="money"></result>
+        <!--一对一关系映射， 配置封装到user中-->
+        <association property="user" column="uid" javaType="com.dnm.domain.User">
+            <id property="id" column="uid"></id>
+            <result property="username" column="username"></result>
+            <result property="address" column="address"></result>
+            <result property="sex" column="sex"></result>
+            <result property="birthday" column="birthday"></result>
+        </association>
+    </resultMap>
+    <select id="findAllAccountUser" resultMap="accountUserMap" resultType="com.dnm.domain.Account">
+        select u.*, a.id as aid, a.uid as uid, a.money from account a, user u where a.uid = u.id;
+    </select>
+
     <select id="findAll" resultType="com.dnm.domain.Account">
         select * from account;
     </select>
