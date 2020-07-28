@@ -86,4 +86,22 @@
             </if>
         </where>
     </select>
+
+    <!--一对多查询-->
+    <resultMap id="userAccountMap" type="com.dnm.domain.User">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+        <result property="birthday" column="birthday"></result>
+        <!-- 配置user对象中accounts集合的映射 -->
+        <collection property="accounts" ofType="com.dnm.domain.Account">
+            <id property="id" column="aid"></id>
+            <result property="uid" column="uid"></result>
+            <result property="money" column="money"></result>
+        </collection>
+    </resultMap>
+    <select id="findAllUserAccount" resultMap="userAccountMap" resultType="com.dnm.domain.User">
+        select u.*, a.id as aid, a.uid, a.money from user u left outer join account a  on u.id = a.uid;
+    </select>
 </mapper>

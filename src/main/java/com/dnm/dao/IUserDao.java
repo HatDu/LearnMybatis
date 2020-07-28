@@ -6,11 +6,18 @@ import com.dnm.domain.User;
 import java.util.List;
 
 public interface IUserDao {
+
     /**
      * 查询所有数据
      * @return
      */
     List<User> findAll();
+
+    /**
+     * 一对多查询，一个User对象中包含多个账户
+     * @return
+     */
+    List<User> findAllUserAccount();
 
     /**
      * 保存用户

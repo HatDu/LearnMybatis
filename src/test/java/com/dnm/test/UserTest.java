@@ -1,6 +1,7 @@
 package com.dnm.test;
 
 import com.dnm.dao.IUserDao;
+import com.dnm.domain.Account;
 import com.dnm.domain.QueryVo;
 import com.dnm.domain.User;
 import com.sun.org.apache.xml.internal.security.Init;
@@ -185,6 +186,17 @@ public class UserTest {
 
         for(User u : users){
             System.out.println(u);
+        }
+    }
+
+    @Test
+    public void findAllUserAccount(){
+        List<User> users = userDao.findAllUserAccount();
+        for(User user : users){
+            System.out.println(user);
+            for(Account account : user.getAccounts()){
+                System.out.println("\t|---->" + account);
+            }
         }
     }
 }
