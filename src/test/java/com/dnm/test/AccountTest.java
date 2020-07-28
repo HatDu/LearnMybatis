@@ -4,6 +4,7 @@ import com.dnm.dao.IAccountDao;
 import com.dnm.dao.IUserDao;
 import com.dnm.domain.Account;
 import com.dnm.domain.User;
+import com.dnm.domain.UserAccount;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -94,5 +95,17 @@ public class AccountTest {
     public void deleteByUserId(){
         accountDao.deleteByUserId(3);
         findAll();
+    }
+
+    /**
+     * 查询所有账户，包括用户名和地址
+     */
+    @Test
+    public void findAllUserAccount(){
+        List<UserAccount> userAccounts = accountDao.findAllUserAccount();
+
+        for(UserAccount u : userAccounts){
+            System.out.println(u);
+        }
     }
 }

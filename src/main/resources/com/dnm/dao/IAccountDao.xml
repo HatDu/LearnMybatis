@@ -10,6 +10,11 @@
         insert into account(uid, money) values(#{uid}, #{money});
     </insert>
 
+    <!--查询所有账户，包括用户名和地址-->
+    <select id="findAllUserAccount" resultType="com.dnm.domain.UserAccount">
+        select a.*, u.username, u.address from account a, user u where a.uid = u.id;
+    </select>
+
     <!-- 删除：根据账户ID删除 -->
     <delete id="deleteByAccountId" parameterType="java.lang.Integer">
         delete from account where id=#{id};
