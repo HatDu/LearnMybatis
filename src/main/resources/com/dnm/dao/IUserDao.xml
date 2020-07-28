@@ -3,6 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dnm.dao.IUserDao">
+
+    <!--当表的列名与实体类属性名不一致时，可以定义如下结果类型 -->
+    <!--类属性名严格区分大小写-->
+    <!--在查询语句中的resultType中，填入该映射-->
+    <resultMap id="userMap" type="com.dnm.domain.User">
+        <!--主键-->
+        <id property="userId" column="id"></id>
+        <!-- 属性-->
+        <result property="userName" column="username"></result>
+        <result property="userSex" column="sex"></result>
+    </resultMap>
 <!--    配置查询所有-->
     <select id="findAll" resultType="com.dnm.domain.User">
         select * from user;
