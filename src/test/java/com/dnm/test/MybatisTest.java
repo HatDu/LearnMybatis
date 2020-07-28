@@ -1,6 +1,7 @@
 package com.dnm.test;
 
 import com.dnm.dao.IUserDao;
+import com.dnm.domain.QueryVo;
 import com.dnm.domain.User;
 import com.sun.org.apache.xml.internal.security.Init;
 import org.apache.ibatis.io.Resources;
@@ -137,5 +138,21 @@ public class MybatisTest {
     public void findTotalCount(){
         Integer count = userDao.findTotalCount();
         System.out.println("共有" + count + "条数据。");
+    }
+
+    /**
+     * Object-Graph Navigation Languaged(ONGL)表达式，查询
+     */
+    @Test
+    public void queryUserByVo(){
+        User user = new User();
+        user.setUsername("%比%");
+        QueryVo vo = new QueryVo();
+        vo.setUser(user);
+
+        List<User> users = userDao.queryUserByVo(vo);
+        for(User u : users){
+            System.out.println(u);
+        }
     }
 }

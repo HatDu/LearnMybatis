@@ -1,5 +1,6 @@
 package com.dnm.dao;
 
+import com.dnm.domain.QueryVo;
 import com.dnm.domain.User;
 
 import java.util.List;
@@ -40,4 +41,7 @@ public interface IUserDao {
      * @return
      */
     Integer findTotalCount();
+
+
+    List<User> queryUserByVo(QueryVo queryVo);
 }

@@ -38,4 +38,9 @@
     <select id="findTotalCount" resultType="Integer">
         select count(id) from user;
     </select>
+
+<!--    根据QueryVo对象中的User对象进行查询-->
+    <select id="queryUserByVo" parameterType="com.dnm.domain.QueryVo" resultType="com.dnm.domain.User">
+        select * from user where username like#{user.username};
+    </select>
 </mapper>
