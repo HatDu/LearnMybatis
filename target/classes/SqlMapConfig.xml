@@ -24,5 +24,7 @@
     <mappers>
         <mapper resource="com/dnm/dao/IUserDao.xml"></mapper>
         <mapper resource="com/dnm/dao/IAccountDao.xml"></mapper>
+        <mapper resource="com/dnm/dao/IRoleDao.xml"></mapper>
+<!--        <package name="..."/>-->
     </mappers>
 </configuration>

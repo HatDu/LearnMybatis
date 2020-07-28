@@ -104,4 +104,20 @@
     <select id="findAllUserAccount" resultMap="userAccountMap" resultType="com.dnm.domain.User">
         select u.*, a.id as aid, a.uid, a.money from user u left outer join account a  on u.id = a.uid;
     </select>
+    <resultMap id="userRoleMap" type="com.dnm.domain.User">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+        <result property="birthday" column="birthday"></result>
+        <collection property="roles" ofType="com.dnm.domain.Role">
+            <id property="roleId" column="rid"></id>
+            <result property="roleName" column="role_name"></result>
+            <result property="roleDesc" column="role_desc"></result>
+        </collection>
+    </resultMap>
+    <select id="findAllUserRole" resultMap="userRoleMap" resultType="com.dnm.domain.Role">
+        select u.*, r.id as rid, r.role_name, r.role_desc from user u left outer join user_role ur on u.id=ur.uid
+            left outer join role r on r.id=ur.rid;
+    </select>
 </mapper>

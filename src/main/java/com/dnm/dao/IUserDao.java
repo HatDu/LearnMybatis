@@ -19,6 +19,9 @@ public interface IUserDao {
      */
     List<User> findAllUserAccount();
 
+    List<User> findAllUserRole();
+
+
     /**
      * 保存用户
      * @param user

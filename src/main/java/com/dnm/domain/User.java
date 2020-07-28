@@ -12,6 +12,15 @@ public class User implements Serializable {
     private String address;
 
     private List<Account> accounts;
+    private List<Role> roles;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     public Integer getId() {
         return id;

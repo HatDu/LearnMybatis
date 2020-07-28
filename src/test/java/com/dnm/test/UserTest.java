@@ -3,6 +3,7 @@ package com.dnm.test;
 import com.dnm.dao.IUserDao;
 import com.dnm.domain.Account;
 import com.dnm.domain.QueryVo;
+import com.dnm.domain.Role;
 import com.dnm.domain.User;
 import com.sun.org.apache.xml.internal.security.Init;
 import org.apache.ibatis.io.Resources;
@@ -15,6 +16,7 @@ import org.junit.Test;
 import sun.misc.Resource;
 
 //import javax.annotation.Resources;
+import javax.xml.ws.RequestWrapper;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationHandler;
@@ -189,6 +191,9 @@ public class UserTest {
         }
     }
 
+    /**
+     * 查询所有用户以及其名下的账户，一对多
+     */
     @Test
     public void findAllUserAccount(){
         List<User> users = userDao.findAllUserAccount();
@@ -196,6 +201,20 @@ public class UserTest {
             System.out.println(user);
             for(Account account : user.getAccounts()){
                 System.out.println("\t|---->" + account);
+            }
+        }
+    }
+
+    /**
+     * 查询用户所承担的所有角色，多对多测试
+     */
+    @Test
+    public void findAllUserRole(){
+        List<User> users = userDao.findAllUserRole();
+        for(User user : users){
+            System.out.println(user);
+            for(Role role : user.getRoles()){
+                System.out.println("\t|---->" + role);
             }
         }
     }
