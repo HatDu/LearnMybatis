@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Mybatis入门案例
  */
-public class MybatisTest {
+public class UserTest {
     private SqlSession session;
     IUserDao userDao;
     @Before
