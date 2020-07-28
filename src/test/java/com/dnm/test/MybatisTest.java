@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -141,7 +142,7 @@ public class MybatisTest {
     }
 
     /**
-     * Object-Graph Navigation Languaged(ONGL)表达式，查询
+     * Object-Graph Navigation Language(ONGL)表达式，查询
      */
     @Test
     public void queryUserByVo(){
@@ -151,6 +152,37 @@ public class MybatisTest {
         vo.setUser(user);
 
         List<User> users = userDao.queryUserByVo(vo);
+        for(User u : users){
+            System.out.println(u);
+        }
+    }
+
+    /**
+     * 根据条件查询
+     */
+    @Test
+    public void findByCondition(){
+        User user = new User();
+        user.setUsername("比比");
+        user.setSex("女");
+        //user.setSex("男");
+        List<User> users = userDao.findUserByCondition(user);
+
+        for(User u : users){
+            System.out.println(u);
+        }
+    }
+
+    @Test
+    public void findUserInIds(){
+        QueryVo vo = new QueryVo();
+        List<Integer> ids = new ArrayList<Integer>();
+        ids.add(3);
+        ids.add(6);
+        ids.add(12);
+        vo.setIds(ids);
+        List<User> users = userDao.findUserInIds(vo);
+
         for(User u : users){
             System.out.println(u);
         }

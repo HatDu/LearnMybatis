@@ -44,4 +44,11 @@ public interface IUserDao {
 
 
     List<User> queryUserByVo(QueryVo queryVo);
+
+    /**
+     * Mybatis动态标签，where与if
+     */
+    List<User> findUserByCondition(User user);
+
+    List<User> findUserInIds(QueryVo vo);
 }

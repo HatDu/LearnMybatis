@@ -55,4 +55,35 @@
         <!-- Object-Graph Navigation Languaged(ONGL)表达式 -->
         select * from user where username like#{user.username};
     </select>
+
+
+<!--    根据条件查询 -->
+    <select id="findUserByCondition" resultType="com.dnm.domain.User" parameterType="com.dnm.domain.User">
+<!--        select * from user where 1=1-->
+<!--        <if test="username != null">-->
+<!--            and username=#{username}-->
+<!--        </if>-->
+<!--        <if test="sex != null">-->
+<!--           and sex=#{sex}-->
+<!--        </if>-->
+    <!--使用where标签避免添加恒等条件-->
+    select * from user
+    <where>
+        <if test="username != null">
+            and username=#{username}
+        </if>
+        <if test="sex != null">
+           and sex=#{sex}
+        </if>
+    </where>
+    </select>
+
+    <select id="findUserInIds" resultType="com.dnm.domain.User" parameterType="com.dnm.domain.QueryVo">
+        select * from user
+        <where>
+            <if test="ids!=null and ids.size()>0">
+                <foreach collection="ids" open="id in (" close=")" separator="," item="id">#{id}</foreach>
+            </if>
+        </where>
+    </select>
 </mapper>
