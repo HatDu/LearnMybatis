@@ -4,6 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <!--Mybatis的主配置文件-->
 <configuration>
+    <!-- 配置参数 -->
+    <settings>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
 <!--    配置环境-->
     <environments default="mysql">
 <!--        配置Mysql的环境-->

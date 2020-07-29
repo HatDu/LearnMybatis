@@ -51,6 +51,17 @@ public class AccountTest {
             System.out.println(account);
         }
     }
+
+    /**
+     * 根据用户id查找Account
+     */
+    @Test
+    public void findAccountByUid(){
+        List<Account> accounts = accountDao.findAccountByUid(3);
+        for(Account account : accounts){
+            System.out.println(account);
+        }
+    }
     /**
      * 创建账户
      */
@@ -118,6 +129,18 @@ public class AccountTest {
         for(Account account : accounts){
             System.out.print(account);
             System.out.println(account.getUser());
+        }
+    }
+
+    /**
+     * 一对一懒加载，需要在总文件中开启配置lazyLoadingEnabled
+     */
+    @Test
+    public void lazyLoad(){
+        List<Account> accounts = accountDao.lazyLoad();
+        for(Account account : accounts){
+            System.out.println(account);
+            System.out.println("\t|---->" + account.getUser());
         }
     }
 }

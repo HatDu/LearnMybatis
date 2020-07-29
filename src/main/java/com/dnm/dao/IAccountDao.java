@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface IAccountDao {
     List<Account> findAll();
+    List<Account> findAccountByUid(Integer id);
 
     void saveAccount(Account account);
 
@@ -25,4 +26,10 @@ public interface IAccountDao {
      * @return
      */
     List<Account> findAllAccountUser();
+
+    /**
+     * 一对一懒加载
+     * @return
+     */
+    List<Account> lazyLoad();
 }

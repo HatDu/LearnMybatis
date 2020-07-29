@@ -8,4 +8,5 @@ create table role(
 insert into role(role_name, role_desc)
 values ('院长', '管理整个学院'),
        ('总裁', '管理整个公司'),
-       ('校长', '管理整个学校');
+       ('校长', '管理整个学校'),
+       ('系主任', '管理整个系');

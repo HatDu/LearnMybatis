@@ -204,7 +204,20 @@ public class UserTest {
             }
         }
     }
-
+    /**
+     * 查询所有用户，懒加载内部的账户成员
+     */
+    @Test
+    public void findAllUserAccountLazyLoad(){
+        List<User> users = userDao.findAllUserAccountLazyLoad();
+        // 注释掉下面代码可以看到区别
+        for(User user : users){
+            System.out.println(user);
+            for(Account account : user.getAccounts()){
+                System.out.println("\t|---->" + account);
+            }
+        }
+    }
     /**
      * 查询用户所承担的所有角色，多对多测试
      */
@@ -218,4 +231,6 @@ public class UserTest {
             }
         }
     }
+
+
 }

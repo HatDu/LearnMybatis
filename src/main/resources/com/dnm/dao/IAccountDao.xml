@@ -41,4 +41,21 @@
     <delete id="deleteByUserId" parameterType="java.lang.Integer">
         delete from account where uid=#{uid};
     </delete>
+
+    <!-- 一对一懒加载 -->
+    <resultMap id="accountUserLazyMap" type="com.dnm.domain.Account">
+        <id property="id" column="id"></id>
+        <result property="uid" column="uid"></result>
+        <result property="money" column="money"></result>
+        <!--一对一关系映射， 配置封装到user中-->
+        <association property="user" column="uid" javaType="com.dnm.domain.User" select="com.dnm.dao.IUserDao.findById"></association>
+    </resultMap>
+    <select id="lazyLoad" resultMap="accountUserLazyMap" resultType="com.dnm.domain.Account">
+        select * from  account;
+    </select>
+
+    <!-- 根据用户id查询账户 -->
+    <select id="findAccountByUid" parameterType="java.lang.Integer" resultType="com.dnm.domain.Account">
+        select * from account where uid=#{id};
+    </select>
 </mapper>

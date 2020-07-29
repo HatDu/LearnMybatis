@@ -1,6 +1,7 @@
 package com.dnm.dao;
 
 import com.dnm.domain.QueryVo;
+import com.dnm.domain.Role;
 import com.dnm.domain.User;
 
 import java.util.List;
@@ -61,4 +62,11 @@ public interface IUserDao {
     List<User> findUserByCondition(User user);
 
     List<User> findUserInIds(QueryVo vo);
+
+
+    /**
+     * 查询所有成员，以懒加载的方式查询内部accounts成员
+     * @return
+     */
+    List<User> findAllUserAccountLazyLoad();
 }

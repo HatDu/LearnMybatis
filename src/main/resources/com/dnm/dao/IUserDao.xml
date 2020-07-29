@@ -120,4 +120,19 @@
         select u.*, r.id as rid, r.role_name, r.role_desc from user u left outer join user_role ur on u.id=ur.uid
             left outer join role r on r.id=ur.rid;
     </select>
+
+
+    <!--一对多查询-->
+    <resultMap id="userAccountLazyMap" type="com.dnm.domain.User">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="address" column="address"></result>
+        <result property="sex" column="sex"></result>
+        <result property="birthday" column="birthday"></result>
+        <!-- 配置user对象中accounts集合的映射 -->
+        <collection property="accounts" column="id" ofType="com.dnm.domain.Account" select="com.dnm.dao.IAccountDao.findAccountByUid"></collection>
+    </resultMap>
+    <select id="findAllUserAccountLazyLoad" resultMap="userAccountLazyMap" resultType="com.dnm.domain.User">
+        select * from user
+    </select>
 </mapper>
