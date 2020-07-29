@@ -16,6 +16,7 @@ import org.junit.Test;
 import sun.misc.Resource;
 
 //import javax.annotation.Resources;
+import javax.xml.transform.Source;
 import javax.xml.ws.RequestWrapper;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,12 +33,13 @@ import java.util.List;
 public class UserTest {
     private SqlSession session;
     IUserDao userDao;
+    SqlSessionFactory factory;
     @Before
     public void init(){
         try {
             InputStream in = Resources.getResourceAsStream("SqlMapConfig.xml");
             SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-            SqlSessionFactory factory = builder.build(in);
+            factory = builder.build(in);
             session = factory.openSession();
             userDao = session.getMapper(IUserDao.class);
             in.close();
@@ -232,5 +234,34 @@ public class UserTest {
         }
     }
 
+    /**
+     * 一级缓存测试
+     */
+    @Test
+    public void testFirstLevelCache(){
+        User user1 = userDao.findById(3);
 
+        //1。 当SqlSession对象关闭后，缓存也随之消失
+        //session.close();
+        //session = factory.openSession(true);
+        //userDao = session.getMapper(IUserDao.class);
+        //2. 调用session.clearCache方法也可以清除缓存
+        session.clearCache();
+        User user2 = userDao.findById(3);
+        System.out.println(user1 == user2);
+    }
+
+    @Test
+    public void testClearCache(){
+        // 1. 获取用户
+        User user1 = userDao.findById(3);
+        // 2. 执行更新
+        user1.setBirthday(new Date());
+        userDao.updateUser(user1);
+
+        // 3. 再次查询
+        session.clearCache();
+        User user2 = userDao.findById(3);
+        System.out.println(user1 == user2);
+    }
 }
